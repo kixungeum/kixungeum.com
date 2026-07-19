@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIXUNG EUM</title>
+    <style>
+        /* 1. 기본 설정 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 13.5px;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        .split-screen {
+            display: flex;
+            flex-direction: column; 
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .left-side {
+            flex: 1;
+            padding: 30px;
+            border-bottom: 2px solid #000; 
+            box-sizing: border-box;
+        }
+
+        .right-side {
+            flex: 1; 
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 💡 오직 리스트 한 줄 한 줄에만 촘촘한 간격 적용 */
+        .list-item, .exhibit-item {
+            margin: 2px 0 !important; 
+            line-height: 1.4;
+            display: block;
+        }
+
+        /* 클릭 가능한 리스트 스타일 (평소엔 검은색, 마우스 올리면 파란색+밑줄) */
+        .exhibit-item {
+            cursor: pointer;
+            color: #000;
+            text-decoration: none;
+        }
+        .exhibit-item:hover {
+            text-decoration: underline;
+            color: #0000EE;
+        }
+
+        /* 아코디언 스타일 */
+        .toggle-btn {
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            margin: 6px 0 !important;
+            color: #000;
+        }
+        .toggle-btn:hover {
+            text-decoration: underline;
+            color: #0000EE;
+        }
+        
+        .toggle-content {
+            display: none;
+            padding: 15px;
+            line-height: 1.8;
+            background-color: #f9f9f9;
+            margin: 10px 0 15px 0;
+            text-align: left;
+            border-left: 1px solid #000;
+        }
+        .toggle-content.show {
+            display: block;
+        }
+
+        /* 오른쪽 콘텐츠 제어 */
+        .content-group {
+            display: none;
+        }
+        .content-group.active {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            body, html { height: 100%; overflow: hidden; }
+            .split-screen {
+                flex-direction: row;
+                height: 100vh;
+            }
+            .left-side {
+                height: 100vh;
+                overflow-y: auto;
+                border-right: 2px solid #000;
+                border-bottom: none;
+                padding: 40px;
+            }
+            .right-side {
+                height: 100vh;
+                overflow-y: auto;
+                padding: 40px;
+            }
+        }
+
+        hr { border: 0; border-top: 2px solid #000; margin: 25px 0; }
+        hr.divider { border-top: 1px solid #000; margin: 60px 0 40px 0; }
+        
+        a { color: #000; text-decoration: none; }
+        a:hover { color: #0000EE; text-decoration: underline; }
+        
+        .section-title { 
+            font-size: 14px; 
+            font-weight: bold; 
+            margin-top: 15px;
+            margin-bottom: 5px; 
+        }
+        mark { background-color: #eee; padding: 0 2px; }
+
+        .media-container { margin-bottom: 15px; }
+        .archive-img { width: 100%; margin-bottom: 10px; display: block; }
+        
+        /* 💡 이미지 밑 캡션 스타일 */
+        .caption { 
+            font-family: "Times New Roman", Times, serif !important;
+            font-size: 13px !important; 
+            line-height: 1.7 !important;
+            color: #333 !important; 
+            margin-bottom: 40px; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="split-screen">
+    <!-- 왼쪽 영역 (목록 및 약력) -->
+    <div class="left-side">
+        <div style="margin-bottom: 20px;">
+            <strong>KIXUNG EUM</strong><br><br>
+            <div class="list-item">Lives and Works Incheon, Korea</div>
+            -
+            <div class="list-item">Email : <a href="mailto:kixungeum@gmail.com">kixungeum@gmail.com</a></div>
+            <div class="list-item">Instagram : <a href="https://www.instagram.com/xkixungx" target="_blank">@xkixungx</a></div>
+            -
+            <div class="list-item">Education</div>
+            <div class="list-item">2015 MA Ceramic Craft / Graduate School at KookMin Univ., Seoul, Korea</div>
+            <div class="list-item">2013 BFA Ceramic Design / Sangmyung Univ., Cheonan, Korea</div>
+        </div>
+
+        <!-- Solo Exhibition 섹션 -->
+        <div class="section-title"><mark>Solo Exhibition</mark></div>
+        <div class="exhibit-item" onclick="showContent('solo-2026-1')">2027 (Scheduled) Untitled / -, Seoul, Korea</div>
+        <div class="exhibit-item" onclick="showContent('solo-2026-2')">2026 『Takvonsuzip Project 01 - Site Records』 / Buyeon, Incheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('solo-2025')">2025 『Afterimages of Blurred Boundaries』 / Incheon Art Platform, Incheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('solo-2021')">2021 『Incompleted Harmony』 / ArtSoombi Center, Seoul, Korea</div>
+        <div class="exhibit-item" onclick="showContent('solo-2019-1')">2019 『Unbalanced Harmony』 / Marunuma Art Park, Asaka, Japan</div>
+        <div class="exhibit-item" onclick="showContent('solo-2019-2')">2019 『An Artist's Living room』 / Hart Gallery, Seoul, Korea</div>
+        -
+        <!-- Group Exhibition 섹션 -->
+        <div class="section-title"><mark>Selected Group Exhibition</mark></div>
+        <div class="exhibit-item" onclick="showContent('group-2026')">2026 『Evidence from the Field: Three Tenses』 / Spaceimsi, Incheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2025')">2025 『2025 Platform Artists : 11 Words』 / Incheon Art Platform, Incheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2024-1')">2024 『Artist's Day & Night』 / ChunCheon Art Village, ChunCheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2024-2')">2024 『Showcon』 / Osan Museum of Art, Osan, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2024-3')">2024 『Marunuma Art Park Residency 5th Anniversary Korean & Japan Exchange Exhibition』 / Tokyo, Japan</div>
+        <div class="exhibit-item" onclick="showContent('group-2023')">2023 『Capturing Everyday Life』 / Clayarch Gimhae Museum, Gimhae, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2022-1')">2022 『The window of My room Mom』 / KCDF Window Gallery, Seoul, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2022-2')">2022 『Non-Fungible Talent alert』 / Culture space H, Jeju, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2022-3')">2022 『Rebirth』 / Onyou Galery, Pyeongchon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2019-1')">2019 『Unfamilliar Harmony』 / Azabujuban Gallry, Tokyo, Japan</div>
+        <div class="exhibit-item" onclick="showContent('group-2019-2')">2019 『Craft Pairing』 / Space B-E, Seoul, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2015-1')">2015 『Asia Contemporary Ceramics Exchange Exhibition』 / Hanzhong, China</div>
+        <div class="exhibit-item" onclick="showContent('group-2015-2')">2015 『MFA Thesis Exhibition』 / Kookmin University Gallery, Seoul, Korea</div>
+        <div class="exhibit-item" onclick="showContent('group-2012')">2012 『Ceramic in the Story』 / Korea Ceramic Foundation, Icheon, Korea</div>
+        -
+        <!-- Residency 섹션 -->
+        <div class="section-title"><mark>Residency</mark></div>
+        <div class="exhibit-item" onclick="showContent('residency-2026')">2026 New Taipei City Yingge Ceramics Museum, Yingge, Taiwan</div>
+        <div class="exhibit-item" onclick="showContent('residency-2025')">2025 Incheon Art Platform Incheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('residency-2024')">2024 ChunCheon Art Village, ChunCheon, Korea</div>
+        <div class="exhibit-item" onclick="showContent('residency-2023')">2023 Clayarch Gimhae Museum, Gimhae, Korea</div>
+        <div class="exhibit-item" onclick="showContent('residency-2019')">2019 Marunuma Art Park, Asaka, Japan</div>
+        -
+        <!-- Art Project 섹션 -->
+        <div class="section-title"><mark>Art Project</mark></div>
+        <div class="exhibit-item" onclick="showContent('project-2025-1')">2025 『Incheon-Tchingdao Rubbing Project』 / 032 (Team Project)</div> 
+        <div class="exhibit-item" onclick="showContent('project-2025-2')">2025 『Individual Perspectives』 Vol.2 / Project MoonZip</div>
+        <div class="exhibit-item" onclick="showContent('project-2024')">2024 『Ooparts Og Vol.1 Og』 / Project MoonZip</div>
+        <div class="exhibit-item" onclick="showContent('project-2020')">2020 『Yimonne』 / Project 8x</div>
+        - 
+        <!-- Funding & Awards 섹션 -->
+        <div class="section-title"><mark>Funding & Awards</mark></div>
+        <div class="list-item">2026 Support for Artists' Activities / Jepulpo Cutural Foundation (JCF)</div>
+        <div class="list-item">2026 Support for Young Artists' Activities / Incheon Foundation for Arts & Culture (IFAC)</div>
+        <div class="list-item">2025 Creative Support for Young Artists / Incheon Foundation for Arts & Culture (IFAC)</div>
+        <div class="list-item">2025 Creative Support for Young Artistsss / Incheon Foundation for Arts & Culture (IFAC)</div>
+        <div class="list-item">2018 Creative Activity Support / Korea Arts Management Service (KAMS)</div>
+        -
+        <!-- Collections 섹션 -->
+        <div class="section-title"><mark>Collections</mark></div>
+        <div class="list-item">2025 『Songwol-dong Fantasy』 / Incheon Foundation for Arts & Culture (IFAC)</div>
+        <div class="list-item">2019 『Self-Punishment』 / Marunuma Art-park</div>
+        -
+        <!-- Critique & Review 섹션 -->
+        <div class="section-title"><mark>Critique & Review</mark></div>
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1Z14nEO8NqDOXej3GZwhkO5DlCVTot9nb/view?usp=share_link" target="_blank">
+            [Review] 『A Journey in Search of Allegory』 / Jung Hyun (Art Critic, Professor at Inha University)
+        </a>
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1eP7YMtgRwTO4I5JRPlse5XLEt7RaTqjE/view?usp=share_link" target="_blank">
+            [Critique] 『The City and Lifey』 / Jang Jintaeg (Contemporary Art Critic)
+        </a>
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1btEyYPsaRL5mX-uXQhbWEqujFqD7d3Hj/view?usp=share_link" target="_blank">
+            [Critique] 『Dead stock or Vintage 』 / Lee SeulBi (Mihakkwan Director)
+        </a>
+    </div>
+
+    <!-- 오른쪽 영역 (콘텐츠 상세 화면) -->
+    <div class="right-side" id="right-content-area">
+        <!-- 0. 기본 메인 화면 -->
+        <div id="default-content" class="content-group active">
+            <div class="section-title"><mark>Project Video</mark></div>
+            <div class="media-container">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/EGV75izwMsk" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="caption">2025 『TAKVONSUZIP PROJECT』 Single Channel Video, 16:9, 5min 13sec</div>
+
+            <div class="media-container">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/YnjVJALqVxU" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="caption">2025 『Beyond Boundaries』 Single Channel Video, 16:9, 5min 7sec</div>
+
+            <hr class="divider">
+            <div class="section-title"><mark>Personal Archive</mark></div>
+            <img src="work1.jpg" class="archive-img">
+            <div class="caption">Figure 1. Installation View at Incheon Art Platform, 2025</div>
+        </div>
+
+        <!-- ==================================================
+             ■ SOLO EXHIBITION 영역
+             ================================================== -->
+        
+        <!-- 1. 2026 Solo Exhibition (Seoul) -->
+        <div id="solo-2026-1" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2026</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-Untitled / Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : 준비 중<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/solo/2026-seoul/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+            <img src="images/solo/2026-seoul/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View 1 (준비 중)</div>
+        </div>
+
+        <!-- 2. 2026 Solo Exhibition (Incheon) -->
+        <div id="solo-2026-2" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2026</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">Takvonsuzip Project 01 - Site Records / Buyeon, Incheon, Korea</span><br>
+                -Exhibition Dates : June 02 ~ June 13, 2026<br>
+                -Exhibition Space : Buyeon (8, Gaehang-ro  106beon-gil, Jemulpo-gu, Incheon)<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Poster Design : Park Chaehee<br>
+                -Photograph : Choi Chullim<br>
+                -Sound Assistance : Woojin Electronic<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : Incheon Foundation for Arts & Culture (IFAC)<br>
+                <br><br>
+                *This exhibition is supported by 2026 Support for Young Artists' Activities.<br>
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;" onmouseover="this.style.color='#0000EE'" onmouseout="this.style.color='#000'">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/solo/2026-buyeon/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster</div>
+            <img src="images/solo/2026-buyeon/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View, 2026</div>
+            <img src="images/solo/2026-buyeon/1.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/2.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/3.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/4.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/5.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Takvonsuzip - Songlim Redevelopment Area, Dong-gu, Incheon / Ceramics, Variable Size, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/6.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/7.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Takvonsuzip Series Detail</div>
+            <img src="images/solo/2026-buyeon/8.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/9.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/10.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/11.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/12.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Site Records - Woljung-ri Heukto, Goheung, Jeollanam-do / Mined clay on Ceramic plate, 21x31cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/13.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Site Records - Pungryu-ri Hwangto, Goheung, Jeollanam-do / Mined clay on Ceramic plate, 35x35cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/14.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/15.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/16.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/17.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Terra-Cart_Undae-ri, Goheung, Jeollanam-do / 1-channel sound, Speaker, Mined clay, Collected ceramic fragments, Iron plate, Wheels, Electric wires, Paper, 44×29×14cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/18.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/19.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/20.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/21.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Terra-Cart_Punggye-ri, Goheung, Jeollanam-do / 1-channel sound, Speaker, Mined clay, Collected ceramic fragments, Iron plate, Wheels, Electric wires, Paper, 58×44×14cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/22.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Takvonsuzip Project / Single channel video, 5min. 13sec., 2025<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/23.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/24.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/25.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Site Records - Songwol-dong Jeokto, Jung-gu, Incheon / Mined clay on Ceramic plate, 31x62cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/26.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Site Records - Yongdong-ri Chamotte, Goheung, Jeollanam-do / Mined clay on Ceramic plate, 31x31cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/27.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/28.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/29.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/solo/2026-buyeon/30.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Terra-Cart_Songwol-dong Jeokto, Jung-gu, Incheon / 1-channel sound, Speaker, Mined clay, Collected ceramic fragments, Iron plate, Wheels, Electric wires, Paper, 58×44×14cm, 2026<br></span>
+            <br><br>
+            <img src="images/solo/2026-buyeon/31.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Site Records - Songwol-dong Jeokto, Jung-gu, Incheon / Mined clay on Ceramic plate, 31x31cm, 2026<br></span>
+            <br><br>
+
+        </div>
+
+        <!-- 3. Solo Exhibition 2025 -->
+        <div id="solo-2025" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2025</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">Afterimages of Blurred Boundaries / Incheon Art Platform E1, Incheon, Korea</span><br>
+                -Exhibition Dates : July 01 ~ July 13, 2025<br>
+                -Exhibition Space : Incheon Art Platform E1<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Exhibition Review : Jung Hyun (Art Critic, Professor at Inha University)<br>
+                -Design : Eum Kixung<br>
+                -Photograph : Jung Siwoo<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : Incheon Foundation for Arts & Culture (IFAC)<br>
+                <br><br>
+                *This exhibition is supported by 2025 Support for Young Artists' Activities.<br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/solo/2025/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+            <img src="images/solo/2025/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View 1 (준비 중)</div>
+        </div>
+
+        <!-- 4. Solo Exhibition 2021 -->
+        <div id="solo-2021" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2021</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Incompleted Harmony』 / ArtSoombi Center, Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : ArtSoombi Center<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/solo/2021/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+            <img src="images/solo/2021/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View 1 (준비 중)</div>
+        </div>
+
+        <!-- 5. Solo Exhibition 2019-1 -->
+        <div id="solo-2019-1" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2019</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">Unbalanced Harmony / Marunuma Art Park, Asaka, Japan</span><br>
+                -Exhibition Dates : December 21 ~ 22 2019<br>
+                -Exhibition Space : Marunuma Art Park (493-1 Kamiuchimagi, Asaka, Saitama, Japan)<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Design : Eum Kixung<br>
+                -Photograph : Ohashi Hiroshi<br>
+                -Hosted and supervised : Marunama Art Park<br>
+                -Sponsor : KCDF<br>
+                <br><br>
+                <a href="https://drive.google.com/file/d/14ENmbn8xhM78ept8DeG3YHkT8Fnrk-Z2/view?usp=sharing" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Map
+                </a>
+            </div>
+            
+            <img src="images/solo/2019-marunuma/poster.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster</div>
+            <img src="images/solo/2019-marunuma/0.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Oyabun (親分), Collected Object, Ceramics, Variable Size, 2019<br></span>
+            <br><br>
+            <img src="images/solo/2019-marunuma/1.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Metalic Man (メタリックマン), Collected Object, Wood, Spray, Variable Size, 2019<br></span>
+            <br><br>
+            <img src="images/solo/2019-marunuma/2.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Goodbye (さようなら), Collected Object, Arcrylic, Light, Variable Size, 2019<br></span>
+            <br><br>
+            <img src="images/solo/2019-marunuma/3.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Ox (牛), Collected Object, Arcrylic, Variable Size, 2019<br></span>
+            <br><br>
+            <img src="images/solo/2019-marunuma/4.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Punish (だんざい), Arcrylic on Wood pannel, Sticker, 2019<br></span>
+            <br><br>
+        </div>
+
+        <!-- 6. Solo Exhibition 2019-2 -->
+        <div id="solo-2019-2" class="content-group">
+            <div class="section-title"><mark>Solo Exhibition 2019</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『An Artist's Living room』 / Hart Gallery, Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Hart Gallery<br>
+                <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/solo/2019-2/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+            <img src="images/solo/2019-2/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View 1 (준비 중)</div>
+        </div>
+
+
+        <!-- ==================================================
+             ■ GROUP EXHIBITION 영역
+             ================================================== -->
+        
+        <!-- 1. spaceimsi 단체전 영역 -->
+        <div id="group-2026" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2026</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">Evidence from the Field: Three Tenses / Spaceimsi, Incheon, Korea</span><br>
+                -Exhibition Dates : May 14 ~ May 27, 2026<br>
+                -Exhibition Space : Spaceimsi (48, Sinpo-ro 23beon-gil, Jemulpo-gu, Incheon)<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : Kang Jiwoong, Eum Kixung, Critical hit<br></span>
+                -Exhibition Curator : Eum Kixung<br>
+                -Exhibition Text : Lee Seulbi (Mihakkwan Director)<br>
+                -Design : Kang Jiwoong<br>
+                -Photograph : Choi Chullim<br>
+                -Hosted and supervised : Eum Kixung<br>
+                -Sponsor : Jung-gu Office, Incheon Metropolitan City, Jepulpo Cultural Foundation (JCP)<br>
+                <br><br>
+                *This exhibition is 2026 Incheon Jung-gu Cultural Foundation "Project to Support Art Activities in Jepulpo, Incheon"
+                <br><br>
+                <a href="https://drive.google.com/file/d/1jRTRNdR09K8ExMJ8KsfLnNdR27lLm4LF/view?usp=share_link" download style="font-weight: bold; text-decoration: underline; color: #000 !important;" onmouseover="this.style.color='#0000EE'" onmouseout="this.style.color='#000'">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            
+            <img src="images/group/2026-spaceimsi/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster</div>
+            <img src="images/group/2026-spaceimsi/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View, 2026</div>
+            <img src="images/group/2026-spaceimsi/1.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/2.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/3.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Today's Seungwoo / Collected Ceramics, Ceramic Decal, Variable Size, 2026<br></span>
+            <br><br>
+            <img src="images/group/2026-spaceimsi/4.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Today's Seungwoo, Detail</div>
+            <img src="images/group/2026-spaceimsi/5.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/6.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/7.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/8.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/9.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/10.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/11.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/12.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/13.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Terra-Cart_Undae-ri, Goheung, Jeollanam-do / Mined clay, Collected ceramic fragments, Iron plate, Wheels, Electric wires, Paper, 44×29×14cm, 2026<br></span>
+            <br><br>
+            <img src="images/group/2026-spaceimsi/14.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Terra-Cart_Undae-ri, Goheung, Jeollanam-do, Detail</div>
+            <img src="images/group/2026-spaceimsi/15.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/16.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/17.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/18.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/19.jpg" class="archive-img" loading="lazy">
+            <span style="font-weight: bold; color: #000 !important;">Terra-Cart_Undae-ri, Goheung, Jeollanam-do<br></span>
+            <br><br>
+            <img src="images/group/2026-spaceimsi/20.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/21.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/22.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2026-spaceimsi/23.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+        </div>
+
+        <!-- 2. Group Exhibition 2025 -->
+        <div id="group-2025" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2025</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-2025 Platform Artists : 11 Words / Incheon Art Platform E-6, G-1, Incheon, Korea</span><br>
+                -Exhibition Dates : October 21 ~ November 02, 2025<br>
+                -Exhibition Space : Incheon Art Platform (3, Jemullyang-ro 218beon-gil, Jemulpo-gu, Incheon)<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : Kang Jiwoong, Kwon Sejin, Young K. Kim, Kim Youngmi, Eum Kixung, Won Narae, Lee Soyoung, Choi Sunyoung, Choi Youngha, Jung Chanil, Hsu ShengKai<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2025/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 3. Group Exhibition 2024-1 -->
+        <div id="group-2024-1" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2024</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Artist's Day & Night』 / ChunCheon Art Village, ChunCheon, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : ChunCheon Art Village<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2024-1/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 4. Group Exhibition 2024-2 -->
+        <div id="group-2024-2" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2024</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Showcon』 / Osan Museum of Art, Osan, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Osan Museum of Art<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2024-2/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 5. Group Exhibition 2024-3 -->
+        <div id="group-2024-3" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2024</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Marunuma Art Park Residency 5th Anniversary Korean & Japan Exchange Exhibition』 / Tokyo, Japan</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Tokyo, Japan<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2024-3/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 6. Group Exhibition 2023 -->
+        <div id="group-2023" class="content-group">  
+            <div class="section-title"><mark>Group Exhibition 2023</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">Capturing Everyday Life / Clayarch Gimhae Museum, Gimhae, Korea</span><br>
+                -Exhibition Dates : December 02 2023 ~ March 31 2024<br>
+                -Exhibition Space : Clayarch Gimhae Museum (25, Buncheong-ro, Jillye-myeon, Gimhae-si, Gyeongsangnam-do)<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : Ruth Ju-Shih Li, Song Nawon, Eum Kixung, Eun Hikyung, Kuo Shu-Fan, Kim Miru, Oh Sunyoung, Yoo Jaeyoun, Cho Eunphil<br></span>
+                -Exhibition Curator : Hong Heejoo<br>
+                -Residency Artist Critique : Lee Seulbi (Mihakkwan Director)<br>
+                -Design : ARA DESIGN<br>
+                -Photograph : Lee Dongmoon<br>
+                -Hosted and supervised : Clayarch Gimhae of Gimhae Cultural Foundation<br>
+                <br><br>
+                <a href="https://drive.google.com/file/d/1KtiNgy8Ar7FbP8UjzWMjmCvBe1FkBy7a/view?usp=sharing" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2023-clay/poster.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster</div>
+            <img src="images/group/2023-clay/0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition View, 2026</div>
+            <img src="images/group/2023-clay/1.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/2.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/3.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/4.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/5.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/6.jpg" class="archive-img" loading="lazy">
+            <div class="caption"></div>
+            <img src="images/group/2023-clay/7.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Collected Image Pieces - Gimhae Dongsang-dong, Ceramics, Digital ceramic decal, Resin, 25x18x22cm, 2023</div>
+        </div>
+
+        <!-- 7. Group Exhibition 2022-1 -->
+        <div id="group-2022-1" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2022</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『The window of My room Mom』 / KCDF Window Gallery, Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : KCDF Window Gallery<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2022-1/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 8. Group Exhibition 2022-2 -->
+        <div id="group-2022-2" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2022</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Non-Fungible Talent alert』 / Culture space H, Jeju, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Culture space H<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2022-2/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 9. Group Exhibition 2022-3 -->
+        <div id="group-2022-3" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2022</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Rebirth』 / Onyou Galery, Pyeongchon, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Onyou Galery<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2022-3/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 10. Group Exhibition 2019-1 -->
+        <div id="group-2019-1" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2019</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Unfamilliar Harmony』 / Azabujuban Gallry, Tokyo, Japan</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Azabujuban Gallry<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2019-1/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 11. Group Exhibition 2019-2 -->
+        <div id="group-2019-2" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2019</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Craft Pairing』 / Space B-E, Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Space B-E<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2019-2/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 12. Group Exhibition 2015-1 -->
+        <div id="group-2015-1" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2015</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Asia Contemporary Ceramics Exchange Exhibition』 / Hanzhong, China</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Hanzhong, China<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2015-1/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 13. Group Exhibition 2015-2 -->
+        <div id="group-2015-2" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2015</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『MFA Thesis Exhibition』 / Kookmin University Gallery, Seoul, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Kookmin University Gallery<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2015-2/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+
+        <!-- 14. Group Exhibition 2012 -->
+        <div id="group-2012" class="content-group">
+            <div class="section-title"><mark>Group Exhibition 2012</mark></div>
+            <br><br>
+            <div class="caption" style="font-family: 'Times New Roman', Times, serif !important; font-size: 14px !important; line-height: 1.7 !important; color: #333 !important;">
+                <span style="font-weight: bold; color: #000 !important;">-『Ceramic in the Story』 / Korea Ceramic Foundation, Icheon, Korea</span><br>
+                -Exhibition Dates : 준비 중<br>
+                -Exhibition Space : Korea Ceramic Foundation (Icheon)<br>
+                <span style="font-weight: bold; color: #000 !important;">-A participating Artist : 준비 중<br></span>
+                -Exhibition Curator : 준비 중<br>
+                -Exhibition Text : 준비 중<br>
+                -Design : 준비 중<br>
+                -Photograph : 준비 중<br>
+                -Hosted and supervised : 준비 중<br>
+                -Sponsor : 준비 중<br>
+                *This exhibition is supported by 준비 중
+                <br><br>
+                <a href="#" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
+                    [Download PDF] Exhibition Catalog & Text
+                </a>
+            </div>
+            <img src="images/group/2012/0.0.jpg" class="archive-img" loading="lazy">
+            <div class="caption">Exhibition Poster (준비 중)</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showContent(id) {
+        // 1. 기본 메인 화면('default-content')을 포함한 모든 컨텐츠 영역을 먼저 완전히 숨깁니다.
+        var defaultContent = document.getElementById('default-content');
+        if (defaultContent) {
+            defaultContent.classList.remove('active');
+        }
+        
+        var groups = document.getElementsByClassName('content-group');
+        for (var i = 0; i < groups.length; i++) {
+            groups[i].classList.remove('active');
+        }
+        
+        // 2. 사용자가 클릭한 메뉴의 ID를 찾아 정확히 해당 영역만 active 상태로 띄웁니다.
+        var target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+        }
+    }
+</script>
+</body>
+</html>
