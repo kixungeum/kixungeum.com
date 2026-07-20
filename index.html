@@ -14,6 +14,7 @@
             font-size: 13.5px;
             color: #000;
             overflow-x: hidden;
+            scroll-behavior: smooth; /* 스크롤 이동 부드럽게 설정 */
         }
 
         .split-screen {
@@ -220,7 +221,7 @@
         <div class="list-item">2019 『Self-Punishment』 / Marunuma Art-park</div>
     </div>
 
-    <!-- 오른쪽 영역 (콘텐츠 상세 화면 - 모든 상세 content-group들이 이 내부에 위치해야 합니다) -->
+    <!-- 오른쪽 영역 (콘텐츠 상세 화면) -->
     <div class="right-side" id="right-content-area">
         
         <!-- 기본 메인 화면 -->
@@ -442,7 +443,7 @@
                 <span style="font-weight: bold; color: #000 !important;">-Artist : Eum Kixung<br></span>
                 -Design : Eum Kixung<br>
                 -Photograph : Ohashi Hiroshi<br>
-                -Hosted and supervised : Marunama Art Park<br>
+                -Hosted and supervised : Marunuma Art Park<br>
                 -Sponsor : KCDF<br>
                 <br><br>
                 <a href="https://drive.google.com/file/d/14ENmbn8xhM78ept8DeG3YHkT8Fnrk-Z2/view?usp=sharing" style="font-weight: bold; text-decoration: underline; color: #000 !important;">
@@ -927,12 +928,12 @@
             <div class="caption">Exhibition Poster (준비 중)</div>
         </div>
 
-    </div> <!-- .right-side 가 여기서 닫혀야 모든 콘텐츠가 오른쪽 화면 안에 보관됩니다. -->
-</div> <!-- .split-screen 닫기 -->
+    </div>
+</div>
 
 <script>
     function showContent(id) {
-        // 1. 기본 메인 화면('default-content')을 포함한 모든 컨텐츠 영역을 먼저 완전히 숨깁니다.
+        // 1. 모든 컨텐츠 영역 숨기기
         var defaultContent = document.getElementById('default-content');
         if (defaultContent) {
             defaultContent.classList.remove('active');
@@ -943,10 +944,25 @@
             groups[i].classList.remove('active');
         }
         
-        // 2. 사용자가 클릭한 메뉴의 ID를 찾아 정확히 해당 영역만 active 상태로 띄웁니다.
+        // 2. 클릭한 메뉴 영역 보이게 설정
         var target = document.getElementById(id);
         if (target) {
             target.classList.add('active');
+        }
+
+        // 3. 모바일/PC 대응 스크롤 조절
+        var rightArea = document.getElementById('right-content-area');
+        
+        if (window.innerWidth < 768) {
+            // 모바일 화면: 밑에 있는 상세 내용 위치로 자연스럽게 스크롤 이동
+            if (rightArea) {
+                rightArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            // PC 화면: 오른쪽 영역 내부 스크롤을 맨 위로 이동
+            if (rightArea) {
+                rightArea.scrollTop = 0;
+            }
         }
     }
 </script>
