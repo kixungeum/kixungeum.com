@@ -18,27 +18,42 @@
         }
 
         /* 2. 메인 화면 레이아웃 (기본: 모바일 위/아래 배치) */
-        .split-screen {
-            display: flex;
-            flex-direction: column; 
-            width: 100%;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
+        /* PC 기본 레이아웃: 왼쪽 슬림 고정, 오른쪽 넓게 */
+.split-screen {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
 
-        .left-side {
-            width: 100%;
-            padding: 30px;
-            border-bottom: 2px solid #000; 
-            box-sizing: border-box;
-        }
+.left-side {
+    width: 320px; /* 좌측 메뉴 폭을 320px로 슬림하게 고정 */
+    flex-shrink: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd; /* 구분선 */
+    overflow-y: auto;
+}
 
-        .right-side {
-            width: 100%;
-            padding: 30px;
-            box-sizing: border-box;
-        }
+.right-side {
+    flex-grow: 1; /* 오른쪽이 남은 넓은 공간을 전부 사용 */
+    padding: 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
 
+/* 모바일 화면 (768px 이하일 때만 위아래 배치) */
+@media (max-width: 768px) {
+    .split-screen {
+        flex-direction: column;
+    }
+    .left-side {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+}
         /* 3. PC 화면 설정 (768px 이상일 때 무조건 50:50 고정) */
         @media (min-width: 768px) {
             body, html { 
