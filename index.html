@@ -1165,14 +1165,12 @@
             target.classList.add('active');
         }
 
-        // 4. 모바일/PC 스크롤 위치 조절
-        var rightArea = document.getElementById('right-content-area');
-        if (window.innerWidth < 768) {
-            if (rightArea) {
+        // 4. 스크롤 맨 위로 이동 (오른쪽 영역 자동 탐색)
+        var rightArea = document.getElementById('right-content-area') || document.querySelector('.right-side');
+        if (rightArea) {
+            if (window.innerWidth < 768) {
                 rightArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        } else {
-            if (rightArea) {
+            } else {
                 rightArea.scrollTop = 0;
             }
         }
