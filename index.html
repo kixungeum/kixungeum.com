@@ -14,94 +14,37 @@
             font-size: 13.5px;
             color: #000;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; /* 스크롤 이동 부드럽게 설정 */
         }
 
-        /* 2. 메인 화면 레이아웃 (기본: 모바일 위/아래 배치) */
-        /* PC 기본 레이아웃: 왼쪽 슬림 고정, 오른쪽 넓게 */
-.split-screen {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-
-.left-side {
-    width: 320px; /* 좌측 메뉴 폭을 320px로 슬림하게 고정 */
-    flex-shrink: 0;
-    padding: 30px 20px;
-    box-sizing: border-box;
-    border-right: 1px solid #ddd; /* 구분선 */
-    overflow-y: auto;
-}
-
-.right-side {
-    flex-grow: 1; /* 오른쪽이 남은 넓은 공간을 전부 사용 */
-    padding: 30px;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-/* 모바일 화면 (768px 이하일 때만 위아래 배치) */
-@media (max-width: 768px) {
-    .split-screen {
-        flex-direction: column;
-    }
-    .left-side {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-    }
-}
-        /* 3. PC 화면 설정 (768px 이상일 때 무조건 50:50 고정) */
-        @media (min-width: 768px) {
-            body, html { 
-                height: 100%; 
-                overflow: hidden; 
-            }
-            
-            .split-screen {
-                flex-direction: row !important;
-                height: 100vh;
-                width: 100vw;
-            }
-
-            /* 좌측 영역: 정확히 50% 폭 고정 */
-            .left-side {
-                flex: 0 0 50% !important;
-                width: 50% !important;
-                max-width: 50% !important;
-                min-width: 50% !important;
-                height: 100vh;
-                overflow-y: auto;
-                border-right: 2px solid #000;
-                border-bottom: none;
-                padding: 40px;
-                box-sizing: border-box;
-            }
-
-            /* 우측 영역: 정확히 50% 폭 고정 */
-            .right-side {
-                flex: 0 0 50% !important;
-                width: 50% !important;
-                max-width: 50% !important;
-                min-width: 50% !important;
-                height: 100vh;
-                overflow-y: auto;
-                padding: 40px;
-                box-sizing: border-box;
-            }
+        .split-screen {
+            display: flex;
+            flex-direction: column; 
+            width: 100%;
+            min-height: 100vh;
         }
 
-        /* 4. 리스트 및 인터랙션 요소 */
+        .left-side {
+            flex: 1;
+            padding: 30px;
+            border-bottom: 2px solid #000; 
+            box-sizing: border-box;
+        }
+
+        .right-side {
+            flex: 1; 
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 💡 오직 리스트 한 줄 한 줄에만 촘촘한 간격 적용 */
         .list-item, .exhibit-item {
             margin: 2px 0 !important; 
             line-height: 1.4;
             display: block;
-            word-break: break-word; /* 긴 텍스트로 인한 레이아웃 미세 밀림 방지 */
         }
 
+        /* 클릭 가능한 리스트 스타일 (평소엔 검은색, 마우스 올리면 파란색+밑줄) */
         .exhibit-item {
             cursor: pointer;
             color: #000;
@@ -112,7 +55,7 @@
             color: #0000EE;
         }
 
-        /* 5. 아코디언 스타일 */
+        /* 아코디언 스타일 */
         .toggle-btn {
             cursor: pointer;
             font-weight: bold;
@@ -139,12 +82,32 @@
             display: block;
         }
 
-        /* 6. 오른쪽 콘텐츠 제어 */
+        /* 오른쪽 콘텐츠 제어 */
         .content-group {
             display: none;
         }
         .content-group.active {
             display: block;
+        }
+
+        @media (min-width: 768px) {
+            body, html { height: 100%; overflow: hidden; }
+            .split-screen {
+                flex-direction: row;
+                height: 100vh;
+            }
+            .left-side {
+                height: 100vh;
+                overflow-y: auto;
+                border-right: 2px solid #000;
+                border-bottom: none;
+                padding: 40px;
+            }
+            .right-side {
+                height: 100vh;
+                overflow-y: auto;
+                padding: 40px;
+            }
         }
 
         hr { border: 0; border-top: 2px solid #000; margin: 25px 0; }
@@ -164,6 +127,7 @@
         .media-container { margin-bottom: 15px; }
         .archive-img { width: 100%; margin-bottom: 10px; display: block; }
         
+        /* 💡 이미지 밑 캡션 스타일 */
         .caption { 
             font-family: "Times New Roman", Times, serif !important;
             font-size: 13px !important; 
@@ -172,7 +136,6 @@
             margin-bottom: 40px; 
         }
     </style>
- 
 </head>
 <body>
 
@@ -190,6 +153,7 @@
             <div class="list-item">2015 MA Ceramic Craft / Graduate School at KookMin Univ., Seoul, Korea</div>
             <div class="list-item">2013 BFA Ceramic Design / Sangmyung Univ., Cheonan, Korea</div>
             <br><br>
+        </div>
 
         <!-- Solo Exhibition 섹션 -->
         <div class="section-title"><mark>Solo Exhibition</mark></div>
@@ -234,15 +198,15 @@
         <br><br>
         <!-- Critique & Review 섹션 -->
         <div class="section-title"><mark>Critique & Review</mark></div>
-        <div class="exhibit-item" onclick="showContent('critique-1')">
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1Z14nEO8NqDOXej3GZwhkO5DlCVTot9nb/view?usp=share_link" target="_blank">
             [Review] 『A Journey in Search of Allegory』 / Jung Hyun (Art Critic, Professor at Inha University)
-        </div>
-        <div class="exhibit-item" onclick="showContent('critique-2')">
-            [Critique] 『The City and Life』 / Jang Jintaeg (Contemporary Art Critic)
-        </div>
-        <div class="exhibit-item" onclick="showContent('critique-3')">
-            [Critique] 『Dead stock or Vintage』 / Lee SeulBi (Independent Curator, Director of Philosopher’s Stone)
-        </div>
+        </a>
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1eP7YMtgRwTO4I5JRPlse5XLEt7RaTqjE/view?usp=share_link" target="_blank">
+            [Critique] 『The City and Lifey』 / Jang Jintaeg (Contemporary Art Critic)
+        </a>
+        <a class="exhibit-item" href="https://drive.google.com/file/d/1btEyYPsaRL5mX-uXQhbWEqujFqD7d3Hj/view?usp=share_link" target="_blank">
+            [Critique] 『Dead stock or Vintage 』 / Lee SeulBi (Mihakkwan Director)
+        </a>
         <br><br>
         <!-- Funding & Awards 섹션 -->
         <div class="section-title"><mark>Funding & Awards</mark></div>
@@ -292,140 +256,6 @@
                 <span style="font-weight: bold; color: #000 !important;">Figure 1. Installation View at Incheon Art Platform, 2025</span>
             </div>
         </div>
-
-        <!-- ==================================================
-             ■ [여기서부터 새로 추가!] 비평/평론 상세 텍스트 영역 3개
-             ================================================== -->
-
-        <!-- 비평 1 -->
-        <div id="critique-1" class="content-group">
-            <div class="section-title"><mark>Review</mark></div>
-            <br>
-            <div class="caption">
-                <span style="font-weight: bold; font-size: 16px; color: #000 !important;">
-                    알레고리를 찾아서 떠나는 여정
-                </span><br>
-                <span>정현 (미술평론가, 인하대 교수)</span><br><br>
-                
-                <!-- 원문 PDF 필요 시 다운로드 링크 -->
-                <a href="https://drive.google.com/file/d/1Z14nEO8NqDOXej3GZwhkO5DlCVTot9nb/view?usp=sharing" download style="font-weight: bold; text-decoration: underline; color: #000 !important;">
-                    [Download PDF] Korean Ver. PDF
-                </a>
-            </div>
-            <br><hr style="border: 0; border-top: 1px solid #eee;"><br>
-            
-            <!-- 평론 본문 -->
-            <div style="line-height: 1.8; color: #222; font-size: 14px; text-align: justify;">
-                <p>여기에 정현 평론가님의 평론 글 전체 원문을 넣으시면 됩니다.</p>
-            </div>
-        </div>
-
-        <!-- 비평 2 -->
-        <!-- 비평 2. 장진택 평론 (영문 버전) -->
-        <div id="critique-2" class="content-group">
-            <div class="section-title"><mark>Critique</mark></div>
-            <br>
-            <div class="caption">
-                <span style="font-weight: bold; font-size: 16px; color: #000 !important;">
-                    The City and Life
-                </span><br>
-                <span>Jang Jintaeg (Contemporary Art Critic)</span><br><br>
-                
-                <a href="https://drive.google.com/file/d/1eP7YMtgRwTO4I5JRPlse5XLEt7RaTqjE/view?usp=sharing" download style="font-weight: bold; text-decoration: underline; color: #000 !important;">
-                    [Download PDF] Korean Ver. PDF
-                </a>
-            </div>
-            <br><hr style="border: 0; border-top: 1px solid #eee;"><br>
-            
-            <!-- 평론 영문 본문 (한글 단락과 1:1 매칭) -->
-            <div style="line-height: 1.8; color: #222; font-size: 14px; text-align: justify; word-break: keep-all;">
-                <!-- 단락 1 -->
-                <p>
-                    What constitutes the foundation of the city are, in ideological terms, clearly composed of structures of both the upper and lower strata. As such, together with the forces that shape its environment, such as technology, capital, and history (and the cultural conditions that emerge from them), the city continuously generates its own material and conceptual transformations. At the micro level of lived reality, the lives of citizens who constitute the city are typically organized as subordinate components within the broader framework of the macro level of urban design. Yet it is rather paradoxical to recall that the very emergence of the city originally placed its purpose in the happiness of these individuals. This is perhaps because once the vast structure of the city is set in motion, its initial justification quickly evaporates, and its original purpose is gradually submerged in the self-reproduction of the urban system itself. Ultimately, as all such aspirations converge toward a logic of maintenance, the reality of the city unfolds within a kind of entropic cycle—where actions arise, fade away, and arise again—repeating similar trajectories while, in the process, somewhat indifferently losing sight of the very existence that should matter most. Such circumstances simultaneously demonstrate the rigidity of reality and reveal how the structures of the city organize everyday life. The problem, then, is that under these conditions individual lives are still assumed to be determined by the city as a kind of a priori proposition. Yet it is axiomatic that the urban system will persist, and the lives of citizens will continue to share their fate with that of the city. This raises a further question: if the so-called class of citizens is conceived as a subject, what meanings might they reclaim as their own foundation within a reflexive context? This question, in turn, gestures toward a more expanded form of public proposition addressed to us all. As Henri LEFEBVRE observed, "specialists who have studied urban reality" can "hardly go without a synthesis, settling for a quantity of knowledge, of dividing and splitting urban reality"<sup>1</sup>. He continues: "More often, they conceptualize the city (and society) as an organism. Historians have frequently linked these entities to an 'evolution' or to an 'historical development'"<sup>1</sup>. This line of critique becomes productive insofar as it redirects attention to the secondary effects that arise when the city is fixed as an object of rational analysis. In this context, EUM Kixung's aesthetic practice re-presents the city as a living form in progress, through a documentary practice that constructs from the residual traces left behind.
-                </p>
-
-                <!-- 단락 2 -->
-                <p style="margin-top: 15px;">
-                    Taking this dynamic structure into account, EUM Kixung's so-called Urban Image Scrap series may be understood as an attempt to focus on constructing an archive through a distinctive act of collecting. His archives, on a material level (regardless of the desires of the subjects who inhabit the city) depict the conditions of a particular era held in suspension. The series of procedures that constitute this act of recording—put more concretely and in commonplace terms, the act of casting the captured city—may, within the institutional context of the modern narrative of development, be reduced merely to the sentimental residue of nostalgia. Yet at the level of private identity grounded in personal memory, it can also transform into an occasion for a different mode of meaning, inscribing the contemporary value of inevitable fractures. Furthermore, the artist's rubbing practice does not aim primarily at realizing the conventional principles of preservation. Rather, it emerges from an effort to painstakingly accumulate, from within localized worlds, the political legitimacy of the urban realization of the structures we call reality. In this sense, EUM's work may be understood not simply as the construction of monumental representation, but as an expression of ignition—a practice that genuinely questions the present function of such structures. Such a process summons the elements that urban planning has excluded—those pushed beyond the boundaries of official categories. The rubbings that unfold along the outer surfaces of buildings render the image of the city as fragments of sensation through a process of direct contact. In discovering and arranging these traces, the artist blurs the hierarchies among the elements that constitute the city. The minor images of urban components he captures no longer remain background or peripheral details; instead, they acquire equal standing as formal units. Rather than placing vague hopes for improvement in the outwardly radiating energies generated by the collisions of massive structures, EUM turns to the opposite point: the implosive processes that unfold almost imperceptibly through the small accumulations of everyday life. From this inward dynamic, he cracks open the seemingly stable order of purposive systems. In particular, the formal language of his work is situated within the category of craft grounded in ceramics. Through this medium, the fragments of memory left incomplete during the process of on-site casting and image collection are hardened through the plastic transformation of firing, thereby elevating their status into markers of record. In this way, craft produces reality not at the level of commerce but at that of the public, and not at the level of abstract concept but within everyday life. The concrete act thus sinks deeper precisely through its fragmentation. Accordingly, the position of the artist evolves—from attention to creation, from witnessing to reportage, and from reception to the articulation of a standpoint. EUM's Urban Image Scrap series recognizes the scale by which meaningful information of the present era may be measured. At the same time, it inscribes subjective propositions related to that information into the level of objective indices, while elevating them into a form akin to pseudo-artifacts or quasi-ruins. Fragments of reality transcribed in this manner function, within the artist’s practice, to reveal overlapping strata of history. In other words, his transcription (jeonsa) operates as an image-skin surrounding the urban system, through which the implications of the surface transcend the layered strata of other signifiers that once displaced its outward extension. Incomplete urban sites, such as renovation or demolition areas and aging city centers, are thus repositioned by the artist from the margins into visibility. Within the alternative time and space of the exhibition, these ‘shadowed’ places are brought into the ‘light’, prompting a reconsideration of the lines of management and control that have governed the operation of the city.
-                </p>
-
-                <!-- 단락 3 -->
-                <p style="margin-top: 15px;">
-                    The sculptural forms thus constructed by EUM seem to suggest a certain threshold, suspended between past and present and between elapsed time and spaces yet to arrive, linking the city’s history to its unfolding future. As members of a society who inevitably live within the structures of the city, the attempt to reconsider the proper purposes by which such structures should operate recalls the mode of sovereignty exercised through relationships established by contract. In other words, the functioning of a vast artificial persona such as the community itself<sup>3</sup>. In this sense, the artist’s work reveals the possibility of restoring the crowd—once constituted as a collective body of citizens—to its original density. It thus proposes that the city must mediate citizens and their lives not merely as objects of management and control, but as genuine manifestations of subjectivity and as plural ends in themselves. The space of everyday life derives its force precisely from exposing the stark differences in positions regarding the organization of an ideal locality. The construction of meaning, therefore, should begin from the recognition of a variable totality woven from the accumulation of multiple generations—erasing the attribute of a singular, monumental unity, or alternatively rendering it opaque. In this way, the meaning of the contemporary city, marked by the keyword of disappearance, must be rewritten as the very process through which its values are constituted. It is precisely this rewriting that EUM Kixung’s work calls for.
-                </p>
-
-                <!-- 주석 (Footnotes) -->
-                <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 12px; color: #666;">
-                    <p><sup>1</sup> LEFEBVRE, Henri, "The Right to the City" in LEFEBVRE, Henri, <i>Writings on Cities</i>, translated by Eleonore KOFMAN and Elizabeth LEBAS (Oxford: Blackwell, 1996).</p>
-                    <p><sup>2</sup> Interview with EUM Kixung, Incheon Art Platform, October 26, 2025.</p>
-                    <p><sup>3</sup> The concepts of social contract, sovereignty, and community formation are taken from <i>Leviathan, or The Matter, Forme and Power of a Common-Wealth Ecclesiastical and Civil</i> by Thomas HOBBES.</p>
-                </div>
-
-                <!-- 필자 소개 (Bio) -->
-                <div style="margin-top: 25px; padding: 15px; background-color: #f9f9f9; font-size: 13px; color: #444; line-height: 1.6;">
-                    <strong>Jang Jintaeg</strong> is an independent curator and researcher of contemporary art. He plans exhibitions and writes critique. He previously founded and operated the curatorial platform ‘INTERACTION SEOUL’ (2016–2017), served as Team Leader of the Hyundai Motor Company’s ZER01NE Creator Studio (2019–2020), and was selected as a research resident at the SeMA Nanji Residency (17th cohort) in 2023. He currently teaches art history and aesthetics at Hongik University, Korea University, and Chung-Ang University.
-                </div>
-            </div>
-        </div>
-
-        <!-- 비평 3. 이슬비 평론 (영문 버전) -->
-        <div id="critique-3" class="content-group">
-            <div class="section-title"><mark>Critique</mark></div>
-            <br>
-            <div class="caption">
-                <span style="font-weight: bold; font-size: 16px; color: #000 !important;">
-                    Dead Stock or Vintage
-                </span><br>
-                <span>Lee Seulbi (Independent Curator / Director of Philosopher's Store)</span><br>
-                <span style="font-size: 14px; color: #000;">Clayarch Gimhae Museum Ceramic Creative Center 2023 Resident Artist Critique</span><br><br>
-                
-                <a href="https://drive.google.com/file/d/1btEyYPsaRL5mX-uXQhbWEqujFqD7d3Hj/view?usp=sharing" download style="font-weight: bold; text-decoration: underline; color: #000 !important;">
-                    [Download PDF] Korean Ver. PDF
-                </a>
-            </div>
-            <br><hr style="border: 0; border-top: 1px solid #eee;"><br>
-            
-            <div style="line-height: 1.8; color: #222; font-size: 14px; text-align: justify; word-break: keep-all;">
-                <!-- 단락 1 -->
-                <p>
-                    Where some people see certain things as simply junk that’s been thrown away, there are others who see items that can be resold and in that way gain value. This is the case for most stuff found at flea markets. Some may see those things as only useless trash, but to others who know their value, no place could be more fascinating. Rummaging through piles of old vintage items is like a treasure hunt. If you go to a flea market or vintage goods shop in Europe, you might get really lucky and come upon something rare and unexpected. On top of that, many of the things found in such vintage markets are inspiring in themselves, perhaps because of the sort of energy that is concentrated within old objects.
-                </p>
-                <!-- 단락 2 -->
-                <p style="margin-top: 15px;">
-                    Is the idea that objects possess spirits or souls just a spooky myth that thrilled us as children? I would argue it is not. Just because this unfathomable, obscure energy cannot be proven scientifically doesn’t mean we can simply shrug it off, when the sense that it exists is so clearly undeniable. The uncanny feeling this gives us also confers a sense of déjà vu. Again, where some see an object that has outlived its usefulness and no longer has any value, others see a precious object filled with cherished memories. As such, value can be defined through many different measures, from a variety of perspectives, since items’ personal and social value is determined through diverse criteria.
-                </p>
-                <!-- 단락 3 -->
-                <p style="margin-top: 15px;">
-                    For such objects to find a new use in the language of art is already a familiar trope. It is well known in the sphere of art that the “found object” (Objet Trouvé) has transformed the artist’s role in the act of production. Another implication is that the artistic techniques for representation have been replaced by acts of the intellect. When Marcel Duchamp showed his work “Fountain,” he set in motion the presentation of existing prefabricated objects as works of art, widely used by Dadaists and Surrealists under the moniker of “readymades.” The act of “selecting” an industrial product, or some existing object that has already been made, was transposed into an act of artistic creation.
-                </p>
-                <!-- 단락 4 -->
-                <p style="margin-top: 15px;">
-                    And now, today, in an age when most ready-made prefabricated products are easily produced, easily used, and easily discarded, what about the image? In the present day where there is a glut of virtually everything, images are likewise no exception. For artists, whose main material is the image, the abundance of both online and offline images become effective materials and motifs. Think of selecting an image that has already been created, or choosing certain “ones” from among a flood of images and objects. Even if the artist isn’t aware of it, borrowing images in this way, even for partial use, is tantamount to a modern take on the methodology of using readymades and found objects. Kixung Eum is no exception.
-                </p>
-                <!-- 단락 5 -->
-                <p style="margin-top: 15px;">
-                    The three-dimensional sculptures produced by Eum are collages made up of “found images” collected by the artist. Fragmented images are overlapped and juxtaposed together to create something enigmatic, and then resin is poured over it to refine the form. The hardened resin gives the individual sheets of paper the physicality of a three-dimensional object. The sources consist of advertisements from old magazines bought in secondhand shops, random flyers and leaflets found around the city, and pictures from old photo albums with no connection to the artist. All of them represent a certain time, or the life of some individual, but like a wandering spirit, no one can say where they’re from. Taking a close look at the artist’s series “The Scrapbook” (2023), you’ll find magazine ads featuring models wearing clothes that were once fashionable, pictures of military items that could be from anywhere, jumbled-up newspaper articles in Korean, Japanese, English, and French, and mixed in with all this, illegal advertising cards and flyers like you might have seen lying around in a public restroom the other day. In the sense that the word ‘scrapbook’ refers to a collection of purposefully selected and organized items, these three-dimensional sculptures composed of haphazard combinations of mixed images belie the series title, conversely seeming to represent the jumbled-up nature of contemporary society.
-                </p>
-                <!-- 단락 6 -->
-                <p style="margin-top: 15px;">
-                    Walking around unfamiliar neighborhoods and alleys, the artist collected all sorts of completely different everyday images he came across in different areas and locations. Afterwards, he edited and reworked his choices. Eum said that the fleeting experiences that happen to him when he’s in a completely different place can sometimes feel unreal. That sensation of déjà vu also occurs when you see certain objects. For example, an abandoned doll or toy, or discarded household item, reminds you of a familiar and commonplace time, while at the same time feeling strange and unfamiliar. That “uncanny” feeling of finding something both familiar and strange at the same time is a sensation that happens to us more often than we might think.
-                </p>
-                <!-- 단락 7 -->
-                <p style="margin-top: 15px;">
-                    In this way, the resulting amassments of fragmented images are deployed as a single piece. So it is with “Unknown” (2022) and “The Time Keeper” (2021–2022), as well. In “The Time Keeper,” the artist has put together various objects he collected and then poured resin over them, seemingly preserving time intact, as its title suggests. Things like cassette tapes, toys, and somebody’s house keys are all part of a convoluted tangle of ownerless stuff that feels old and worn-out, but is conversely also suggestive of some pop-culture phenomenon, giving off a retro vibe. Creating combinations of images or objects that started off with the act of fanatical collecting is the definition of kitsch itself. The artist breaks his found objects and images into pieces and puts them back together again to create new objects. However, these new objects have no purpose or utility. What verges even more on kitsch is the artist’s desire to display these objects as things in themselves. Kitsch has become an established pop culture phenomenon for the reason that the definition of “high art,” its ostensible opposite, has become ambiguous. But it is also because the sort of lowbrow art and B-level content represented by kitsch contain their own distinct characteristics and aesthetic features.
-                </p>
-                <!-- 단락 8 -->
-                <p style="margin-top: 15px;">
-                    Just as trends come and go and everything old becomes new again, with vintage and retro looks in vogue, Eum’s works containing overlapping traces of many different time periods preserve the sense of déjà vu in old objects intact. The mania for retro objects that kindle nostalgia is driven not by a wish to go back to earlier times, but rather by a desire to fondly recall and reminisce about the past. The past itself reverts to memory, so objects embodying a given time period will be valued differently, depending on the individual. And as for Eum’s sculptures, constructed on this basis—how will they be interpreted? What’s left after retro? Reminiscing about the past does not necessarily mean wanting to go back to those days. The retro phenomenon may just be empty repetitions of earlier fads, but that does not mean it is meaningless. More than anything, it reveals the character of the times of the public consuming it.
-                </p>
-                <!-- 단락 9 -->
-                <p style="margin-top: 15px;">
-                    Just as some old wines simply go bad while others come with a vintage label, the value of an object also depends on the accumulation of time. Eum’s objects: marked transparent threads intertwining traces of many nationalities, various time periods, and any number of individuals. His personal tastes are on full display in a mix of elements, including but not limited to religious icons, the head of Venus, and graffiti-like scrawls in apparent imitation of Basquiat. Meanwhile, in one corner of the artist’s studio are large boxes and shelves filled with photos he has collected, dusty old books, antiques or pieces of junk, household trash, and vintage items. This is the stockpile from which Eum sources his materials. When it comes to evaluating his bizarre hybrid objects, as the famous Internet meme asks, are they “dead stock or vintage”? It all depends on whoever recognizes their value, like being able to spot treasure among heaps of old stuff.
-                </p>
-            </div>
-        </div>
-    </div>
-</div> <!-- right-side 끝 -->
 
         <!-- ==================================================
              ■ SOLO EXHIBITION 영역
@@ -1053,8 +883,9 @@
             <div class="caption">Rainbow 🌈 / 26.07.20</div>
             <img src="images/residency/26-yingge/721.jpg" class="archive-img" loading="lazy">
             <div class="caption">Yingge Research 5 / 26.07.21</div>
-            <img src="images/residency/26-yingge/722.jpg" class="archive-img" loading="lazy">
-            <div class="caption">Yingge Research 6 / 26.07.22</div>
+
+
+
         </div>
 
         <!-- 2. Residency 2025 -->
@@ -1180,12 +1011,14 @@
             target.classList.add('active');
         }
 
-        // 4. 스크롤 맨 위로 이동 (오른쪽 영역 자동 탐색)
-        var rightArea = document.getElementById('right-content-area') || document.querySelector('.right-side');
-        if (rightArea) {
-            if (window.innerWidth < 768) {
+        // 4. 모바일/PC 스크롤 위치 조절
+        var rightArea = document.getElementById('right-content-area');
+        if (window.innerWidth < 768) {
+            if (rightArea) {
                 rightArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
+            }
+        } else {
+            if (rightArea) {
                 rightArea.scrollTop = 0;
             }
         }
