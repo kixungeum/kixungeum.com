@@ -135,6 +135,40 @@
             color: #333 !important; 
             margin-bottom: 40px; 
         }
+
+        .main-container, .container, #wrapper {
+            display: flex !important;
+            flex-direction: row !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            align-items: flex-start !important;
+        }
+
+        .sidebar, #sidebar, .left-menu, .left-column {
+            flex: 0 0 50% !important;
+            width: 50% !important;
+            max-width: 50% !important;
+            min-width: 50% !important;
+            padding-right: 30px !important;
+            box-sizing: border-box !important;
+            word-break: break-word !important;
+        }
+
+        .content, #content, .right-content, .right-column {
+            flex: 0 0 50% !important;
+            width: 50% !important;
+            max-width: 50% !important;
+            min-width: 50% !important;
+            padding-left: 30px !important;
+            box-sizing: border-box !important;
+            word-break: break-word !important;
+        }
+
+        .sidebar *, .content * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
     </style>
 </head>
 <body>
@@ -1018,7 +1052,6 @@
             <div class="caption">Yingge Research 5 / 26.07.21</div>
             <img src="images/residency/26-yingge/722.jpg" class="archive-img" loading="lazy">
             <div class="caption">Yingge Research 6 / 26.07.22</div>
-            
         </div>
 
         <!-- 2. Residency 2025 -->
